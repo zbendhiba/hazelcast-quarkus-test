@@ -1,5 +1,7 @@
 package org.acme.resteasy;
 
+import java.util.concurrent.BlockingQueue;
+
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -7,13 +9,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.hazelcast.collection.BaseQueue;
 import com.hazelcast.collection.IList;
 import com.hazelcast.collection.IQueue;
+import com.hazelcast.collection.ISet;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
 import com.hazelcast.multimap.MultiMap;
 import com.hazelcast.replicatedmap.ReplicatedMap;
+import com.hazelcast.ringbuffer.Ringbuffer;
 import com.hazelcast.topic.ITopic;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.acme.hazelcast.listener.MyEntryListener;
 import org.acme.hazelcast.listener.MyItemListener;
 import org.acme.hazelcast.listener.MyMaplListener;
@@ -78,8 +84,32 @@ public class ExampleResource {
     @Path("list")
     public Response list() {
         IList<Object> list = hazelcastInstance.getList("foo-list");
-        list.addItemListener(new MyItemListener(), true);
+      //  list.addItemListener(new MyItemListener(), true);
         return Response.ok().build();
     }
+
+    @GET
+    @Path("ringbuffer")
+    public Response ringbuffer(){
+        Ringbuffer<Object> ringbuffer = hazelcastInstance.getRingbuffer("foo-ringbuffer");
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("base-queue")
+    public Response baseQueue(){
+        BaseQueue<?> queue = hazelcastInstance.getQueue("foo-base-queue");
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("set")
+    public Response set(){
+        ISet<Object> set = hazelcastInstance.getSet("foo-set");
+       // set.addItemListener(new MyItemListener(), true);
+        return Response.ok().build();
+    }
+
+
 
 }

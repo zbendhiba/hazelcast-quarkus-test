@@ -67,4 +67,28 @@ public class ExampleResourceTest {
                 .statusCode(200);
     }
 
+    @Test
+    public void testRingBuffer() {
+        given()
+                .when().get("/test/ringbuffer")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    public void testBaseQueue() {
+        given()
+                .when().get("/test/base-queue")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    public void testSet() {
+        given()
+                .when().get("/test/set")
+                .then()
+                .statusCode(200);
+    }
+
 }
