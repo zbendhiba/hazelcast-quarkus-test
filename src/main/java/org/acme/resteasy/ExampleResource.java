@@ -35,8 +35,8 @@ public class ExampleResource {
     @Path("topic")
     public Response topic() {
        ITopic<Object> topic =  hazelcastInstance.getTopic("foo-topic");
-       // topic.addMessageListener(new MyMessageListener());
-        return Response.ok().build();
+       //topic.addMessageListener(new MyMessageListener());
+       return Response.ok().build();
     }
 
     @GET()
